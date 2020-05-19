@@ -10,7 +10,7 @@ public class MyFirstProgram {
                 distance(point1, point2));
 
         System.out.println("Расстояние между точками, высчитанное методом класса, равно: " +
-                point1.distance(3, 3));
+                point1.distance(point2));
     }
 
     public static double distance(Point p1, Point p2) {
