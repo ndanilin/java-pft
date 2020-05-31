@@ -56,4 +56,15 @@ public class ContactHelper extends HelperBase {
     public void returnToContactPage(){
         wd.findElement(By.linkText("home page")).click();
     }
+
+    public void createContact(ContactData contact, boolean creation){
+        initContactCreation();
+        fillContactForm(contact, creation);
+        submitContactCreation();
+        returnToContactPage();
+    }
+
+    public boolean isThereAContact(){
+        return isElementPresent(By.name("selected[]"));
+    }
 }
