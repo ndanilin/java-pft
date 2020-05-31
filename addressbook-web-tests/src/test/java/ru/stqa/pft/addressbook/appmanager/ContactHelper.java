@@ -50,5 +50,10 @@ public class ContactHelper extends HelperBase {
     public void submitContactDeletion() {
         click(By.cssSelector("[value=Delete]"));
         wd.switchTo().alert().accept();
+        wd.findElement(By.cssSelector("div.msgbox"));
+    }
+
+    public void returnToContactPage(){
+        wd.findElement(By.linkText("home page")).click();
     }
 }
