@@ -17,6 +17,15 @@ public class ContactData {
         this.group = group;
     }
 
+    public ContactData(String lastName, String firstName) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.phoneHome = null;
+        this.address = null;
+        this.mail = null;
+        this.group = null;
+    }
+
     public String getFirstName() {
         return firstName;
     }
