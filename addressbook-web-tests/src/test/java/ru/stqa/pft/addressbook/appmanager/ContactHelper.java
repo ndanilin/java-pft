@@ -16,7 +16,6 @@ public class ContactHelper extends HelperBase {
         super(wd);
     }
 
-
     public void submitContactCreation() {
         click(By.cssSelector("[name=submit]"));
     }
@@ -28,7 +27,9 @@ public class ContactHelper extends HelperBase {
         type(By.cssSelector("[name=home]"), contactData.getPhoneHome());
         type(By.cssSelector("[name=email]"), contactData.getMail());
         if (creation) {
-            new Select(wd.findElement(By.name("new_group"))).selectByVisibleText(contactData.getGroup());
+            if (contactData.getGroup() != null) {
+                new Select(wd.findElement(By.name("new_group"))).selectByVisibleText(contactData.getGroup());
+            }
         } else {
             Assert.assertFalse(isElementPresent(By.name("new_group")));
         }
@@ -57,28 +58,28 @@ public class ContactHelper extends HelperBase {
         wd.findElement(By.cssSelector("div.msgbox"));
     }
 
-    public void returnToContactPage(){
+    public void returnToContactPage() {
         wd.findElement(By.linkText("home page")).click();
     }
 
-    public void createContact(ContactData contact, boolean creation){
+    public void createContact(ContactData contact, boolean creation) {
         initContactCreation();
         fillContactForm(contact, creation);
         submitContactCreation();
         returnToContactPage();
     }
 
-    public boolean isThereAContact(){
+    public boolean isThereAContact() {
         return isElementPresent(By.name("selected[]"));
     }
 
     public List<ContactData> getContactList() {
         List<ContactData> contacts = new ArrayList<>();
         List<WebElement> elements = wd.findElements(By.name("entry"));
-        for (WebElement e : elements){
+        for (WebElement e : elements) {
             String lastName = e.findElement(By.cssSelector("td:nth-child(2)")).getText();
             String firstName = e.findElement(By.cssSelector("td:nth-child(3)")).getText();
-            ContactData contact =  new ContactData(lastName, firstName);
+            ContactData contact = new ContactData(lastName, firstName);
             contacts.add(contact);
         }
         return contacts;
