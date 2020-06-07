@@ -79,7 +79,7 @@ public class ContactHelper extends HelperBase {
         for (WebElement e : elements) {
             String lastName = e.findElement(By.cssSelector("td:nth-child(2)")).getText();
             String firstName = e.findElement(By.cssSelector("td:nth-child(3)")).getText();
-            ContactData contact = new ContactData(lastName, firstName);
+            ContactData contact = new ContactData(firstName, lastName);
             contacts.add(contact);
         }
         return contacts;
