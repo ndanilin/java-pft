@@ -40,8 +40,8 @@ public class ContactHelper extends HelperBase {
     }
 
 
-    public void initContactModification() {
-        click(By.cssSelector("[title=Edit]"));
+    public void initContactModification(int index) {
+        wd.findElements(By.cssSelector("[title=Edit]")).get(index).click();
     }
 
     public void submitContactModification() {
