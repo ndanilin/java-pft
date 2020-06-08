@@ -19,8 +19,9 @@ public class ContactCreationTests extends TestBase {
         Assert.assertEquals(after.size(), before.size() + 1);
 
         before.add(contact);
-        before.sort(Comparator.comparing(ContactData::getLastName));
-        after.sort(Comparator.comparing(ContactData::getLastName));
+        Comparator<? super ContactData> byId = (c1, c2) -> Integer.compare(c1.getId(), c2.getId());
+        before.sort(byId);
+        after.sort(byId);
         Assert.assertEquals(before, after);
     }
 
