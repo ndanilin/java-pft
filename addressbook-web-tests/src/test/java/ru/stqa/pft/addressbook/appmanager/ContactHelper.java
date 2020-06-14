@@ -62,7 +62,7 @@ public class ContactHelper extends HelperBase {
         wd.findElement(By.linkText("home page")).click();
     }
 
-    public void createContact(ContactData contact, boolean creation) {
+    public void create(ContactData contact, boolean creation) {
         initContactCreation();
         fillContactForm(contact, creation);
         submitContactCreation();
@@ -74,6 +74,11 @@ public class ContactHelper extends HelperBase {
         fillContactForm(contact, false);
         submitContactModification();
         returnToContactPage();
+    }
+
+    public void delete(int index) {
+        selectContact(index);
+        submitContactDeletion();
     }
 
     public boolean isThereAContact() {
