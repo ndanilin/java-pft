@@ -6,6 +6,7 @@ public class ContactData {
     private int id = Integer.MAX_VALUE;
     private String firstName;
     private String lastName;
+    private String phonesAll;
     private String phoneHome;
     private String phoneMobile;
     private String phoneWork;
@@ -23,6 +24,10 @@ public class ContactData {
 
     public String getPhoneHome() {
         return phoneHome;
+    }
+
+    public String getPhonesAll() {
+        return phonesAll;
     }
 
     public String getPhoneMobile() {
@@ -61,6 +66,11 @@ public class ContactData {
 
     public ContactData withLastName(String lastName) {
         this.lastName = lastName;
+        return this;
+    }
+
+    public ContactData withPhonesAll(String phonesAll) {
+        this.phonesAll = phonesAll;
         return this;
     }
 

@@ -4,10 +4,12 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import ru.stqa.pft.addressbook.model.ContactData;
 
+import static java.util.Arrays.asList;
+import static java.util.stream.Collectors.joining;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-public class ContactPhoneTest extends TestBase {
+public class ContactPhoneTests extends TestBase {
 
     @BeforeMethod
     public void ensurePreconditions() {
@@ -25,13 +27,17 @@ public class ContactPhoneTest extends TestBase {
         app.goTo().homePage();
         ContactData contact = app.contact().all().iterator().next();
         ContactData contactInfoFromEditForm = app.contact().infoFromEditForm(contact);
-
-        assertThat(contact.getPhoneHome(), equalTo(cleaned(contactInfoFromEditForm.getPhoneHome())));
-        assertThat(contact.getPhoneMobile(), equalTo(cleaned(contactInfoFromEditForm.getPhoneMobile())));
-        assertThat(contact.getPhoneWork(), equalTo(cleaned(contactInfoFromEditForm.getPhoneWork())));
+        assertThat(contact.getPhonesAll(), equalTo(mergePhones(contactInfoFromEditForm)));
     }
 
-    public String cleaned(String phone){
+    private String mergePhones(ContactData contact) {
+        return asList(contact.getPhoneHome(), contact.getPhoneMobile(), contact.getPhoneWork())
+                .stream().filter(s -> !s.equals(""))
+                .map(ContactPhoneTests::cleaned)
+                .collect(joining("\n"));
+    }
+
+    private static String cleaned(String phone) {
         return phone.replaceAll("\\s", "").replaceAll("[-()]", "");
     }
 }

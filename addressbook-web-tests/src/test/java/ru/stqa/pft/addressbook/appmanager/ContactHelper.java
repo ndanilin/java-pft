@@ -118,11 +118,11 @@ public class ContactHelper extends HelperBase {
         for (WebElement e : elements) {
             String lastName = e.findElement(By.cssSelector("td:nth-child(2)")).getText();
             String firstName = e.findElement(By.cssSelector("td:nth-child(3)")).getText();
-            String[] phones = e.findElement(By.cssSelector("td:nth-child(6)")).getText().split("\n");
+            String allPhones = e.findElement(By.cssSelector("td:nth-child(6)")).getText();
             int id = Integer.parseInt(e.findElement(By.cssSelector("input")).getAttribute("id"));
             ContactData contact = new ContactData()
                     .withId(id).withFirstName(firstName).withLastName(lastName)
-                    .withPhoneHome(phones[0]).withPhoneMobile(phones[1]).withPhoneWork(phones[2]);
+                    .withPhonesAll(allPhones);
             contactCash.add(contact);
         }
         return contactCash;
