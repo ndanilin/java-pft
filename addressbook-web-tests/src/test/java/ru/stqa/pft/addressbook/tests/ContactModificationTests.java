@@ -12,16 +12,20 @@ public class ContactModificationTests extends TestBase {
 
     @BeforeMethod
     public void ensurePreconditions() {
-        if (!app.contact().isThereAContact()){
-            app.contact().create(new ContactData("Иван", "Петров", "45-46-47",
-                    "г. Москва, Ленинградский пр-т, д.5, кв.108", "ivan@mail.com", "test"), true);
+        if (!app.contact().isThereAContact()) {
+            app.contact().create(new ContactData()
+                    .withFirstName("Иван").withLastName("Петров")
+                    .withPhoneHome("45-46-47").withAddress("г. Москва, Ленинградский пр-т, д.5, кв.108")
+                    .withMail("ivan@mail.com").withGroup("test"), true);
         }
     }
 
     @Test
     public void testContactModification() {
         List<ContactData> before = app.contact().getContactList();
-        ContactData contact = new ContactData("Пётр", "Иванов", "45-46-47","г. Москва, Ленинградский пр-т, д.5, кв.108", "ivan@mail.com");
+        ContactData contact = new ContactData()
+                .withFirstName("Пётр").withLastName("Иванов").withPhoneHome("45-46-47")
+                .withAddress("г. Москва, Ленинградский пр-т, д.5, кв.108").withMail("ivan@mail.com");
         int index = before.size() - 1;
         app.contact().modify(contact, index);
         List<ContactData> after = app.contact().getContactList();
