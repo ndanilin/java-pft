@@ -29,7 +29,9 @@ public class ContactHelper extends HelperBase {
         type(By.cssSelector("[name=home]"), contactData.getPhoneHome());
         type(By.cssSelector("[name=mobile]"), contactData.getPhoneMobile());
         type(By.cssSelector("[name=work]"), contactData.getPhoneWork());
-        type(By.cssSelector("[name=email]"), contactData.getMail());
+        type(By.cssSelector("[name=email]"), contactData.getMailFirst());
+        type(By.cssSelector("[name=email2]"), contactData.getMailSecond());
+        type(By.cssSelector("[name=email3]"), contactData.getMailThird());
         if (creation) {
             if (contactData.getGroup() != null) {
                 new Select(wd.findElement(By.name("new_group"))).selectByVisibleText(contactData.getGroup());
@@ -105,10 +107,14 @@ public class ContactHelper extends HelperBase {
         String phoneMobile = wd.findElement(By.name("mobile")).getAttribute("value");
         String phoneWork = wd.findElement(By.name("work")).getAttribute("value");
         String address = wd.findElement(By.name("address")).getAttribute("value");
+        String mailFirst = wd.findElement(By.name("email")).getAttribute("value");
+        String mailSecond = wd.findElement(By.name("email2")).getAttribute("value");
+        String mailThirst = wd.findElement(By.name("email3")).getAttribute("value");
         wd.navigate().back();
         return new ContactData().withId(contact.getId()).withFirstName(firstName).withLastName(lastName)
                 .withPhoneHome(phoneHome).withPhoneMobile(phoneMobile).withPhoneWork(phoneWork)
-                .withAddress(address);
+                .withAddress(address)
+                .withMailFirst(mailFirst).withMailSecond(mailSecond).withMailThird(mailThirst);
     }
 
     public Contacts all() {
@@ -122,11 +128,13 @@ public class ContactHelper extends HelperBase {
             String firstName = e.findElement(By.cssSelector("td:nth-child(3)")).getText();
             String allPhones = e.findElement(By.cssSelector("td:nth-child(6)")).getText();
             String address = e.findElement(By.cssSelector("td:nth-child(4)")).getText();
+            String allMails = e.findElement(By.cssSelector("td:nth-child(5)")).getText();
             int id = Integer.parseInt(e.findElement(By.cssSelector("input")).getAttribute("id"));
             ContactData contact = new ContactData()
                     .withId(id).withFirstName(firstName).withLastName(lastName)
                     .withPhonesAll(allPhones)
-                    .withAddress(address);
+                    .withAddress(address)
+                    .withMailsAll(allMails);
             contactCash.add(contact);
         }
         return contactCash;
