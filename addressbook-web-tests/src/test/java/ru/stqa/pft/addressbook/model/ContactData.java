@@ -90,6 +90,7 @@ public class ContactData {
 
         ContactData that = (ContactData) o;
 
+        if (id != that.id) return false;
         if (!Objects.equals(firstName, that.firstName)) return false;
         return Objects.equals(lastName, that.lastName);
     }
