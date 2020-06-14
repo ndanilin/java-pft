@@ -104,9 +104,11 @@ public class ContactHelper extends HelperBase {
         String phoneHome = wd.findElement(By.name("home")).getAttribute("value");
         String phoneMobile = wd.findElement(By.name("mobile")).getAttribute("value");
         String phoneWork = wd.findElement(By.name("work")).getAttribute("value");
+        String address = wd.findElement(By.name("address")).getAttribute("value");
         wd.navigate().back();
         return new ContactData().withId(contact.getId()).withFirstName(firstName).withLastName(lastName)
-                .withPhoneHome(phoneHome).withPhoneMobile(phoneMobile).withPhoneWork(phoneWork);
+                .withPhoneHome(phoneHome).withPhoneMobile(phoneMobile).withPhoneWork(phoneWork)
+                .withAddress(address);
     }
 
     public Contacts all() {
@@ -119,10 +121,12 @@ public class ContactHelper extends HelperBase {
             String lastName = e.findElement(By.cssSelector("td:nth-child(2)")).getText();
             String firstName = e.findElement(By.cssSelector("td:nth-child(3)")).getText();
             String allPhones = e.findElement(By.cssSelector("td:nth-child(6)")).getText();
+            String address = e.findElement(By.cssSelector("td:nth-child(4)")).getText();
             int id = Integer.parseInt(e.findElement(By.cssSelector("input")).getAttribute("id"));
             ContactData contact = new ContactData()
                     .withId(id).withFirstName(firstName).withLastName(lastName)
-                    .withPhonesAll(allPhones);
+                    .withPhonesAll(allPhones)
+                    .withAddress(address);
             contactCash.add(contact);
         }
         return contactCash;
