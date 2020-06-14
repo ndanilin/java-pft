@@ -12,6 +12,8 @@ import java.util.List;
 
 public class ContactHelper extends HelperBase {
 
+    private Contacts contactCash = null;
+
     public ContactHelper(WebDriver wd) {
         super(wd);
     }
@@ -94,23 +96,6 @@ public class ContactHelper extends HelperBase {
         return isElementPresent(By.name("selected[]"));
     }
 
-    private Contacts contactCash = null;
-
-    public Contacts all() {
-        if (contactCash != null) {
-            return contactCash;
-        }
-        contactCash = new Contacts();
-        List<WebElement> elements = wd.findElements(By.name("entry"));
-        for (WebElement e : elements) {
-            String lastName = e.findElement(By.cssSelector("td:nth-child(2)")).getText();
-            String firstName = e.findElement(By.cssSelector("td:nth-child(3)")).getText();
-            int id = Integer.parseInt(e.findElement(By.cssSelector("input")).getAttribute("id"));
-            ContactData contact = new ContactData().withId(id).withFirstName(firstName).withLastName(lastName);
-            contactCash.add(contact);
-        }
-        return contactCash;
-    }
 
     public ContactData infoFromEditForm(ContactData contact) {
         initContactModificationById(contact.getId());
@@ -122,5 +107,24 @@ public class ContactHelper extends HelperBase {
         wd.navigate().back();
         return new ContactData().withId(contact.getId()).withFirstName(firstName).withLastName(lastName)
                 .withPhoneHome(phoneHome).withPhoneMobile(phoneMobile).withPhoneWork(phoneWork);
+    }
+
+    public Contacts all() {
+        if (contactCash != null) {
+            return contactCash;
+        }
+        contactCash = new Contacts();
+        List<WebElement> elements = wd.findElements(By.name("entry"));
+        for (WebElement e : elements) {
+            String lastName = e.findElement(By.cssSelector("td:nth-child(2)")).getText();
+            String firstName = e.findElement(By.cssSelector("td:nth-child(3)")).getText();
+            String[] phones = e.findElement(By.cssSelector("td:nth-child(6)")).getText().split("\n");
+            int id = Integer.parseInt(e.findElement(By.cssSelector("input")).getAttribute("id"));
+            ContactData contact = new ContactData()
+                    .withId(id).withFirstName(firstName).withLastName(lastName)
+                    .withPhoneHome(phones[0]).withPhoneMobile(phones[1]).withPhoneWork(phones[2]);
+            contactCash.add(contact);
+        }
+        return contactCash;
     }
 }

@@ -6,9 +6,9 @@
       <GradleProjectSettings>
         <option name="delegatedBuild" value="false" />
         <option name="testRunner" value="PLATFORM" />
-        <option name="disableWrapperSourceDistributionNotification" value="true" />
         <option name="distributionType" value="DEFAULT_WRAPPED" />
         <option name="externalProjectPath" value="$PROJECT_DIR$/addressbook-web-tests" />
+        <option name="gradleHome" value="c:/DevTools/gradle" />
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$/addressbook-web-tests" />
@@ -21,6 +21,7 @@
         <option name="testRunner" value="PLATFORM" />
         <option name="distributionType" value="DEFAULT_WRAPPED" />
         <option name="externalProjectPath" value="$PROJECT_DIR$/sandbox" />
+        <option name="gradleHome" value="c:/DevTools/gradle" />
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$/sandbox" />
