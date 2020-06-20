@@ -41,7 +41,6 @@ public class GroupCreationTests extends TestBase {
 
     @DataProvider
     public Iterator<Object[]> validContactsFromJson() throws IOException {
-        List<Object[]> list = new ArrayList<>();
         BufferedReader reader = new BufferedReader(new FileReader(new File("src/test/resources/groups.json")));
         StringBuilder json = new StringBuilder();
         String line = reader.readLine();
