@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.thoughtworks.xstream.XStream;
 import org.testng.annotations.DataProvider;
+import org.testng.annotations.Ignore;
 import org.testng.annotations.Test;
 import ru.stqa.pft.addressbook.model.GroupData;
 import ru.stqa.pft.addressbook.model.Groups;
@@ -67,6 +68,7 @@ public class GroupCreationTests extends TestBase {
     }
 
     @Test
+    @Ignore
     public void testBadGroupCreation() {
         app.goTo().groupPage();
         Groups before = app.group().all();

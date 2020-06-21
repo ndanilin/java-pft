@@ -3,6 +3,7 @@ package ru.stqa.pft.addressbook.tests.contacts;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import org.testng.annotations.DataProvider;
+import org.testng.annotations.Ignore;
 import org.testng.annotations.Test;
 import ru.stqa.pft.addressbook.model.ContactData;
 import ru.stqa.pft.addressbook.model.Contacts;
@@ -48,6 +49,7 @@ public class ContactCreationTests extends TestBase {
     }
 
     @Test
+    @Ignore
     public void testContactCreation() {
         Contacts before = app.contact().all();
         File photo = new File("src/test/resources/avatar.jpg");
@@ -63,6 +65,7 @@ public class ContactCreationTests extends TestBase {
     }
 
     @Test
+    @Ignore
     public void testBadContactCreation() {
         Contacts before = app.contact().all();
         ContactData contact = new ContactData().withFirstName("test'"); // нельзя создавать контакт с апострофом
