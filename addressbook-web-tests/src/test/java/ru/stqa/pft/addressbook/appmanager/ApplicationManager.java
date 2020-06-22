@@ -37,7 +37,8 @@ public class ApplicationManager {
 
         if (browser.equals(BrowserType.FIREFOX)) {
             FirefoxOptions options = new FirefoxOptions();
-            options.setBinary("c:\\Program Files\\Mozilla FirefoxLast\\firefox.exe");
+//            options.setBinary("c:\\Program Files\\Mozilla FirefoxLast\\firefox.exe");
+            options.setBinary(properties.getProperty("firefox.binaryPath"));
             wd = new FirefoxDriver(options);
         } else if (browser.equals(BrowserType.CHROME)) {
             wd = new ChromeDriver();
