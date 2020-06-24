@@ -54,7 +54,7 @@ public class GroupDataGenerator {
     }
 
     private void saveAsJson(List<GroupData> groups, File file) throws IOException {
-        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        Gson gson = new GsonBuilder().setPrettyPrinting().excludeFieldsWithoutExposeAnnotation().create();
         String json = gson.toJson(groups);
         try (Writer writer = new FileWriter(file)) {
             writer.write(json);
@@ -63,8 +63,7 @@ public class GroupDataGenerator {
 
     private void saveAsXml(List<GroupData> groups, File file) throws IOException {
         XStream xStream = new XStream();
-        xStream.alias("groups", GroupData.class);
-        xStream.omitField(GroupData.class, "id");
+        xStream.processAnnotations(GroupData.class);
         String xml = xStream.toXML(groups);
         try (Writer writer = new FileWriter(file)) {
             writer.write(xml);
