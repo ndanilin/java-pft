@@ -17,40 +17,40 @@ public class ContactData {
 
     @Expose
     @Column(name = "firstname")
-    private String firstName;
+    private String firstName = "";
 
     @Expose
     @Column(name = "lastname")
-    private String lastName;
+    private String lastName = "";
 
     @Column(name = "home")
     @Type(type = "text")
-    private String phoneHome;
+    private String phoneHome = "";
 
     @Column(name = "mobile")
     @Type(type = "text")
-    private String phoneMobile;
+    private String phoneMobile = "";
 
     @Column(name = "work")
     @Type(type = "text")
-    private String phoneWork;
+    private String phoneWork = "";
 
     @Column(name = "email")
     @Type(type = "text")
-    private String mailFirst;
+    private String mailFirst = "";
 
     @Column(name = "email2")
     @Type(type = "text")
-    private String mailSecond;
+    private String mailSecond = "";
 
     @Column(name = "email3")
     @Type(type = "text")
-    private String mailThird;
+    private String mailThird = "";
 
     @Expose
     @Column(name = "address")
     @Type(type = "text")
-    private String address;
+    private String address = "";
 
     @Column(name = "photo")
     @Type(type = "text")
@@ -200,6 +200,13 @@ public class ContactData {
                 "id=" + id +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
+                ", phoneHome='" + phoneHome + '\'' +
+                ", phoneMobile='" + phoneMobile + '\'' +
+                ", phoneWork='" + phoneWork + '\'' +
+                ", mailFirst='" + mailFirst + '\'' +
+                ", mailSecond='" + mailSecond + '\'' +
+                ", mailThird='" + mailThird + '\'' +
+                ", address='" + address + '\'' +
                 '}';
     }
 
@@ -212,7 +219,14 @@ public class ContactData {
 
         if (id != that.id) return false;
         if (!Objects.equals(firstName, that.firstName)) return false;
-        return Objects.equals(lastName, that.lastName);
+        if (!Objects.equals(lastName, that.lastName)) return false;
+        if (!Objects.equals(phoneHome, that.phoneHome)) return false;
+        if (!Objects.equals(phoneMobile, that.phoneMobile)) return false;
+        if (!Objects.equals(phoneWork, that.phoneWork)) return false;
+        if (!Objects.equals(mailFirst, that.mailFirst)) return false;
+        if (!Objects.equals(mailSecond, that.mailSecond)) return false;
+        if (!Objects.equals(mailThird, that.mailThird)) return false;
+        return Objects.equals(address, that.address);
     }
 
     @Override
@@ -220,6 +234,13 @@ public class ContactData {
         int result = id;
         result = 31 * result + (firstName != null ? firstName.hashCode() : 0);
         result = 31 * result + (lastName != null ? lastName.hashCode() : 0);
+        result = 31 * result + (phoneHome != null ? phoneHome.hashCode() : 0);
+        result = 31 * result + (phoneMobile != null ? phoneMobile.hashCode() : 0);
+        result = 31 * result + (phoneWork != null ? phoneWork.hashCode() : 0);
+        result = 31 * result + (mailFirst != null ? mailFirst.hashCode() : 0);
+        result = 31 * result + (mailSecond != null ? mailSecond.hashCode() : 0);
+        result = 31 * result + (mailThird != null ? mailThird.hashCode() : 0);
+        result = 31 * result + (address != null ? address.hashCode() : 0);
         return result;
     }
 }
