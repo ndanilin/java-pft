@@ -54,7 +54,7 @@ public class ContactData {
 
     @Column(name = "photo")
     @Type(type = "text")
-    private String photo;
+    private String photo = "";
 
     @Transient
     private String group;

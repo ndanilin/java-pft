@@ -40,18 +40,17 @@ public class ContactCreationTests extends TestBase {
 
     @Test(dataProvider = "validContacts")
     public void testContactCreationFromJson(ContactData contact) {
-        Contacts before = app.contact().all();
+        Contacts before = app.db().contacts();
         app.contact().create(contact, true);
         assertThat(app.contact().count(), equalTo(before.size() + 1));
-        Contacts after = app.contact().all();
+        Contacts after = app.db().contacts();
         assertThat(after, equalTo(
                 before.withAdded(contact.withId(after.stream().mapToInt(c -> c.getId()).max().getAsInt()))));
     }
 
     @Test
-    @Ignore
     public void testContactCreation() {
-        Contacts before = app.contact().all();
+        Contacts before = app.db().contacts();
         File photo = new File("src/test/resources/avatar.jpg");
         ContactData contact = new ContactData()
                 .withFirstName("Иван").withLastName("Петров").withPhoneHome("45-46-47")
@@ -59,19 +58,18 @@ public class ContactCreationTests extends TestBase {
                 .withPhoto(photo);
         app.contact().create(contact, true);
         assertThat(app.contact().count(), equalTo(before.size() + 1));
-        Contacts after = app.contact().all();
+        Contacts after = app.db().contacts();
         assertThat(after, equalTo(
                 before.withAdded(contact.withId(after.stream().mapToInt(c -> c.getId()).max().getAsInt()))));
     }
 
     @Test
-    @Ignore
     public void testBadContactCreation() {
-        Contacts before = app.contact().all();
+        Contacts before = app.db().contacts();
         ContactData contact = new ContactData().withFirstName("test'"); // нельзя создавать контакт с апострофом
         app.contact().create(contact, true);
         assertThat(app.contact().count(), equalTo(before.size()));
-        Contacts after = app.contact().all();
+        Contacts after = app.db().contacts();
         assertThat(after, equalTo(before));
     }
 
