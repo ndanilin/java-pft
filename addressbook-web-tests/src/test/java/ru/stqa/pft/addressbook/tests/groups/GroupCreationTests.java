@@ -59,23 +59,22 @@ public class GroupCreationTests extends TestBase {
     @Test(dataProvider = "validContactsFromJson")
     public void testGroupCreation(GroupData group) {
         app.goTo().groupPage();
-        Groups before = app.group().all();
+        Groups before = app.db().groups();
         app.group().create(group);
         assertThat(app.group().count(), equalTo(before.size() + 1));
-        Set<GroupData> after = app.group().all();
+        Groups after = app.db().groups();
         assertThat(after, equalTo(
                 before.withAdded(group.withId(after.stream().mapToInt(g -> g.getId()).max().getAsInt()))));
     }
 
     @Test
-    @Ignore
     public void testBadGroupCreation() {
-        app.goTo().groupPage();
-        Groups before = app.group().all();
+        Groups before = app.db().groups();
         GroupData group = new GroupData().withName("test'"); //нельзя создавать группу с апострофом
+        app.goTo().groupPage();
         app.group().create(group);
         assertThat(app.group().count(), equalTo(before.size()));
-        Set<GroupData> after = app.group().all();
+        Groups after = app.db().groups();
         assertThat(after, equalTo(before));
     }
 }

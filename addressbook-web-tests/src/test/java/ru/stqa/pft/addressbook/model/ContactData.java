@@ -1,23 +1,71 @@
 package ru.stqa.pft.addressbook.model;
 
+import com.google.gson.annotations.Expose;
+import org.hibernate.annotations.Type;
+
+import javax.persistence.*;
 import java.io.File;
 import java.util.Objects;
 
+@Entity
+@Table(name = "addressbook")
 public class ContactData {
-    private transient int id = Integer.MAX_VALUE;
-    private String firstName;
-    private String lastName;
-    private String phonesAll;
-    private String phoneHome;
-    private String phoneMobile;
-    private String phoneWork;
-    private String address;
-    private String mailsAll;
-    private String mailFirst;
-    private String mailSecond;
-    private String mailThird;
+
+    @Id
+    @Column(name = "id")
+    private int id = Integer.MAX_VALUE;
+
+    @Expose
+    @Column(name = "firstname")
+    private String firstName = "";
+
+    @Expose
+    @Column(name = "lastname")
+    private String lastName = "";
+
+    @Column(name = "home")
+    @Type(type = "text")
+    private String phoneHome = "";
+
+    @Column(name = "mobile")
+    @Type(type = "text")
+    private String phoneMobile = "";
+
+    @Column(name = "work")
+    @Type(type = "text")
+    private String phoneWork = "";
+
+    @Column(name = "email")
+    @Type(type = "text")
+    private String mailFirst = "";
+
+    @Column(name = "email2")
+    @Type(type = "text")
+    private String mailSecond = "";
+
+    @Column(name = "email3")
+    @Type(type = "text")
+    private String mailThird = "";
+
+    @Expose
+    @Column(name = "address")
+    @Type(type = "text")
+    private String address = "";
+
+    @Column(name = "photo")
+    @Type(type = "text")
+    private String photo = "";
+
+    @Transient
     private String group;
-    private File photo;
+
+
+    @Transient
+    private String phonesAll;
+
+    @Transient
+    private String mailsAll;
+
 
     public String getFirstName() {
         return firstName;
@@ -72,7 +120,7 @@ public class ContactData {
     }
 
     public File getPhoto() {
-        return photo;
+        return new File(photo);
     }
 
     public ContactData withId(int id) {
@@ -142,7 +190,7 @@ public class ContactData {
     }
 
     public ContactData withPhoto(File photo) {
-        this.photo = photo;
+        this.photo = photo.getPath();
         return this;
     }
 
@@ -152,6 +200,13 @@ public class ContactData {
                 "id=" + id +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
+                ", phoneHome='" + phoneHome + '\'' +
+                ", phoneMobile='" + phoneMobile + '\'' +
+                ", phoneWork='" + phoneWork + '\'' +
+                ", mailFirst='" + mailFirst + '\'' +
+                ", mailSecond='" + mailSecond + '\'' +
+                ", mailThird='" + mailThird + '\'' +
+                ", address='" + address + '\'' +
                 '}';
     }
 
@@ -164,7 +219,14 @@ public class ContactData {
 
         if (id != that.id) return false;
         if (!Objects.equals(firstName, that.firstName)) return false;
-        return Objects.equals(lastName, that.lastName);
+        if (!Objects.equals(lastName, that.lastName)) return false;
+        if (!Objects.equals(phoneHome, that.phoneHome)) return false;
+        if (!Objects.equals(phoneMobile, that.phoneMobile)) return false;
+        if (!Objects.equals(phoneWork, that.phoneWork)) return false;
+        if (!Objects.equals(mailFirst, that.mailFirst)) return false;
+        if (!Objects.equals(mailSecond, that.mailSecond)) return false;
+        if (!Objects.equals(mailThird, that.mailThird)) return false;
+        return Objects.equals(address, that.address);
     }
 
     @Override
@@ -172,6 +234,13 @@ public class ContactData {
         int result = id;
         result = 31 * result + (firstName != null ? firstName.hashCode() : 0);
         result = 31 * result + (lastName != null ? lastName.hashCode() : 0);
+        result = 31 * result + (phoneHome != null ? phoneHome.hashCode() : 0);
+        result = 31 * result + (phoneMobile != null ? phoneMobile.hashCode() : 0);
+        result = 31 * result + (phoneWork != null ? phoneWork.hashCode() : 0);
+        result = 31 * result + (mailFirst != null ? mailFirst.hashCode() : 0);
+        result = 31 * result + (mailSecond != null ? mailSecond.hashCode() : 0);
+        result = 31 * result + (mailThird != null ? mailThird.hashCode() : 0);
+        result = 31 * result + (address != null ? address.hashCode() : 0);
         return result;
     }
 }
