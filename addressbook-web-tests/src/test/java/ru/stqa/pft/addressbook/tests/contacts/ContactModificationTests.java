@@ -17,7 +17,7 @@ public class ContactModificationTests extends TestBase {
             app.contact().create(new ContactData()
                     .withFirstName("Иван").withLastName("Петров")
                     .withPhoneHome("45-46-47").withAddress("г. Москва, Ленинградский пр-т, д.5, кв.108")
-                    .withMailFirst("ivan@mail.com").withGroup("test"), true);
+                    .withMailFirst("ivan@mail.com"), true);
         }
     }
 
