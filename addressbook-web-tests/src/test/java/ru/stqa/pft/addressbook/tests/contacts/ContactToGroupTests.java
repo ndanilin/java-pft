@@ -1,22 +1,22 @@
-package ru.stqa.pft.addressbook.tests;
+package ru.stqa.pft.addressbook.tests.contacts;
 
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import ru.stqa.pft.addressbook.model.ContactData;
-import ru.stqa.pft.addressbook.model.Contacts;
 import ru.stqa.pft.addressbook.model.GroupData;
 import ru.stqa.pft.addressbook.model.Groups;
+import ru.stqa.pft.addressbook.tests.TestBase;
 
 import java.util.stream.Collectors;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-public class ContactGroupTests extends TestBase {
+public class ContactToGroupTests extends TestBase {
 
     @BeforeMethod
     public void ensurePreconditions() {
-        if (app.db().contacts().size() == 0) {
+        if (app.db().contacts().stream().filter(e -> (e.getGroups().isEmpty())).collect(Collectors.toSet()).size() == 0) {
             app.contact().create(new ContactData().withFirstName("Иван").withLastName("Петров"), true);
         }
 
@@ -31,22 +31,16 @@ public class ContactGroupTests extends TestBase {
         app.goTo().homePage();
         Groups groups = app.db().groups();
         GroupData group = groups.iterator().next();
-
-        // отбираем контакты без групп. Если таких нет, то создаём новый
-        Contacts contacts = new Contacts(app.db().contacts().stream().filter(e -> (e.getGroups().isEmpty())).collect(Collectors.toSet()));
-        if (contacts.isEmpty()) {
-            app.contact().create(new ContactData().withFirstName("Иван").withLastName("Петров"), true);
-            contacts = new Contacts(app.db().contacts().stream().filter(e -> (e.getGroups().isEmpty())).collect(Collectors.toSet()));
-        }
-        ContactData contact = contacts.iterator().next();
-
+        ContactData contact = app.db().contacts().
+                stream().filter(e -> (e.getGroups().isEmpty())).collect(Collectors.toSet()).
+                iterator().next();
         app.contact().addToGroup(contact, group);
-        app.goTo().homePage();
 
         // Hibernate кеширует результаты, поэтому обновляем данные по нашему контакту:
         int contactId = contact.getId();
-        contact = new Contacts(app.db().contacts().stream().filter(e -> (e.getId() == contactId)).collect(Collectors.toSet())).iterator().next();
-
+        contact = app.db().contacts().
+                stream().filter(e -> (e.getId() == contactId)).collect(Collectors.toSet()).
+                iterator().next();
         assertThat(contact.getGroups().contains(group), equalTo(true));
     }
 }
