@@ -7,6 +7,7 @@ import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 import ru.stqa.pft.addressbook.model.ContactData;
 import ru.stqa.pft.addressbook.model.Contacts;
+import ru.stqa.pft.addressbook.model.GroupData;
 
 import java.util.List;
 
@@ -66,6 +67,12 @@ public class ContactHelper extends HelperBase {
         click(By.cssSelector("[value=Delete]"));
         wd.switchTo().alert().accept();
         wd.findElement(By.cssSelector("div.msgbox"));
+    }
+
+    public void addToGroup(ContactData contact, GroupData group) {
+        selectContact(contact.getId());
+        new Select(wd.findElement(By.name("to_group"))).selectByVisibleText(group.getName());
+        wd.findElement(By.name("add")).click();
     }
 
     public void returnToContactPage() {
