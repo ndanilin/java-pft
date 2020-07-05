@@ -1,5 +1,12 @@
 package ru.stqa.pft.mantis.appmanager;
 
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
+
+import java.util.List;
+import java.util.stream.Collectors;
+
+import static java.util.stream.Collectors.toList;
 import static org.openqa.selenium.By.cssSelector;
 import static org.openqa.selenium.By.name;
 
@@ -16,11 +23,25 @@ public class RegistrationHelper extends HelperBase {
         click(cssSelector("[type=submit]"));
     }
 
-    public void finish(String confirmationLink,String username, String password) {
+    public void finish(String confirmationLink, String username, String password) {
         wd.get(confirmationLink);
         type(name("realname"), username);
         type(name("password"), password);
         type(name("password_confirm"), password);
         click(cssSelector("[type=submit]"));
+    }
+
+    public void loginWithAdmin() {
+//        wd.get(app.getProperty("web.baseUrl"));
+        type(By.name("username"), app.getProperty("web.adminLogin"));
+        click(cssSelector("[type=submit]"));
+        type(By.name("password"), app.getProperty("web.adminPassword"));
+        click(cssSelector("[type=submit]"));
+    }
+
+    public void selectUser() {
+        app.getDriver().findElements(By.cssSelector("tbody [href]"))
+                .stream().filter(u -> !u.getText().equals("administrator")).collect(Collectors.toList())
+                .get(0).click();
     }
 }
