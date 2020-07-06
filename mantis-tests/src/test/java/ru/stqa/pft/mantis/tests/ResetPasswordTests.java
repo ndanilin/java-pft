@@ -1,6 +1,5 @@
 package ru.stqa.pft.mantis.tests;
 
-import org.openqa.selenium.By;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -10,22 +9,26 @@ import ru.stqa.pft.mantis.model.MailMessage;
 import java.io.IOException;
 import java.util.List;
 
-import static java.lang.String.format;
 import static org.testng.Assert.assertTrue;
 
-public class ResetTests extends TestBase {
+public class ResetPasswordTests extends TestBase {
 
-//    @BeforeMethod
-    public void startMailServer(){
+    @BeforeMethod
+    public void startMailServer() {
         app.mail().start();
     }
 
     @Test
-    public void testRegistration() throws IOException {
+    public void testResetPassword() throws IOException {
+        String password = "password_new";
+
         app.registration().loginWithAdmin();
         app.getDriver().get(app.getProperty("web.baseUrl") + "/manage_user_page.php");
-        app.registration().selectUser();
-
+        List<String> cred = app.registration().selectUser();
+        List<MailMessage> mailMessages = app.mail().waitForMail(0, 10000);
+        String confirmationLink = findConfirmationLink(mailMessages, cred.get(1));
+        app.registration().finish(confirmationLink, cred.get(0), password);
+        assertTrue(app.newSession().login(cred.get(0), password));
     }
 
     private String findConfirmationLink(List<MailMessage> mailMessages, String email) {
@@ -34,8 +37,8 @@ public class ResetTests extends TestBase {
         return regex.getText(mailMessage.text);
     }
 
-//    @AfterMethod(alwaysRun = true)
-    public void stopMailServer(){
+    @AfterMethod(alwaysRun = true)
+    public void stopMailServer() {
         app.mail().stop();
     }
 }

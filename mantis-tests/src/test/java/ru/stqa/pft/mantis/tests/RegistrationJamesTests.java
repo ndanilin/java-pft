@@ -1,7 +1,5 @@
 package ru.stqa.pft.mantis.tests;
 
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import ru.lanwen.verbalregex.VerbalExpression;
 import ru.stqa.pft.mantis.model.MailMessage;
@@ -20,7 +18,7 @@ public class RegistrationJamesTests extends TestBase {
         long now = System.currentTimeMillis();
         String user = format("user%s", now);
         String password = "password";
-        String email = format("user%s@localhost.localdomain", now);
+        String email = format("user%s@localhost", now);
         app.james().createUser(user, password);
         app.registration().start(user, email);
         List<MailMessage> mailMessages = app.james().waitForMail(user, password, 60000);
