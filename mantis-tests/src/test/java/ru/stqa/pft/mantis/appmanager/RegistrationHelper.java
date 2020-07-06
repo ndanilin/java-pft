@@ -3,6 +3,7 @@ package ru.stqa.pft.mantis.appmanager;
 import org.openqa.selenium.By;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -38,13 +39,14 @@ public class RegistrationHelper extends HelperBase {
         click(cssSelector("[type=submit]"));
     }
 
-    public List<String> selectUser() {
+    public HashMap<String, String> selectUser() {
+        HashMap<String, String> result = new HashMap<>();
         app.getDriver().findElements(By.cssSelector("tbody [href]"))
                 .stream().filter(u -> !u.getText().equals("administrator")).collect(Collectors.toList())
                 .get(0).click();
-        String user = app.getDriver().findElement(By.name("username")).getAttribute("value");
-        String email = app.getDriver().findElement(By.name("email")).getAttribute("value");
+        result.put("user", app.getDriver().findElement(By.name("username")).getAttribute("value"));
+        result.put("email", app.getDriver().findElement(By.name("email")).getAttribute("value"));
         app.getDriver().findElement(By.cssSelector("[value='Сбросить пароль']")).click();
-        return new ArrayList<>(asList(user, email));
+        return result;
     }
 }

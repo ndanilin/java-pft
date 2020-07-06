@@ -7,8 +7,10 @@ import ru.lanwen.verbalregex.VerbalExpression;
 import ru.stqa.pft.mantis.model.MailMessage;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 
+import static java.lang.String.format;
 import static org.testng.Assert.assertTrue;
 
 public class ResetPasswordTests extends TestBase {
@@ -20,15 +22,15 @@ public class ResetPasswordTests extends TestBase {
 
     @Test
     public void testResetPassword() throws IOException {
-        String password = "password_new";
-
+        long now = System.currentTimeMillis();
+        String password = format("password%s", now);
         app.registration().loginWithAdmin();
         app.getDriver().get(app.getProperty("web.baseUrl") + "/manage_user_page.php");
-        List<String> cred = app.registration().selectUser();
+        HashMap<String, String> cred = app.registration().selectUser();
         List<MailMessage> mailMessages = app.mail().waitForMail(0, 10000);
-        String confirmationLink = findConfirmationLink(mailMessages, cred.get(1));
-        app.registration().finish(confirmationLink, cred.get(0), password);
-        assertTrue(app.newSession().login(cred.get(0), password));
+        String confirmationLink = findConfirmationLink(mailMessages, cred.get("email"));
+        app.registration().finish(confirmationLink, cred.get("user"), password);
+        assertTrue(app.newSession().login(cred.get("user"), password));
     }
 
     private String findConfirmationLink(List<MailMessage> mailMessages, String email) {
