@@ -24,13 +24,13 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath 'no.nils:wsdl2java:0.9'
+        classpath 'no.nils:wsdl2java:0.12'
     }
 }
 
 wsdl2java {
-    generatedWsdlDir = file("src/main/java")
-    wsdlDir = file("src/main/resources") // define to support incremental build
+//    generatedWsdlDir = file("src/main/java")
+//    wsdlDir = file("src/main/resources") // define to support incremental build
     wsdlsToGenerate = [   //  2d-array of wsdls and cxf-parameters
                           ['src/main/resources/geo.wsdl'],
     ]
