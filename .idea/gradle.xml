@@ -34,6 +34,20 @@
         <option name="delegatedBuild" value="false" />
         <option name="testRunner" value="PLATFORM" />
         <option name="distributionType" value="DEFAULT_WRAPPED" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/rest-sample" />
+        <option name="gradleHome" value="c:/DevTools/gradle" />
+        <option name="gradleJvm" value="11" />
+        <option name="modules">
+          <set>
+            <option value="$PROJECT_DIR$/rest-sample" />
+          </set>
+        </option>
+        <option name="useQualifiedModuleNames" value="true" />
+      </GradleProjectSettings>
+      <GradleProjectSettings>
+        <option name="delegatedBuild" value="false" />
+        <option name="testRunner" value="PLATFORM" />
+        <option name="distributionType" value="DEFAULT_WRAPPED" />
         <option name="externalProjectPath" value="$PROJECT_DIR$/sandbox" />
         <option name="gradleHome" value="c:/DevTools/gradle" />
         <option name="gradleJvm" value="11" />
@@ -47,7 +61,6 @@
       <GradleProjectSettings>
         <option name="delegatedBuild" value="false" />
         <option name="testRunner" value="PLATFORM" />
-        <option name="disableWrapperSourceDistributionNotification" value="true" />
         <option name="distributionType" value="DEFAULT_WRAPPED" />
         <option name="externalProjectPath" value="$PROJECT_DIR$/soap-sample" />
         <option name="gradleHome" value="c:/DevTools/gradle" />
