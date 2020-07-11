@@ -1,6 +1,7 @@
 package ru.stqa.pft.mantis.tests;
 
 import org.testng.Assert;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import ru.stqa.pft.mantis.model.Issue;
 import ru.stqa.pft.mantis.model.Project;
@@ -11,6 +12,11 @@ import java.rmi.RemoteException;
 import java.util.Set;
 
 public class SoapTests extends TestBase {
+
+    @BeforeMethod
+    public void before() throws RemoteException, ServiceException, MalformedURLException {
+        skipIfNotFixed(1);
+    }
 
     @Test
     public void testGetProjects() throws MalformedURLException, ServiceException, RemoteException {
